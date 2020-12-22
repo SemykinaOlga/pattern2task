@@ -6,6 +6,7 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
+
 import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
@@ -26,9 +27,19 @@ public class DataGenerator {
         private Registration() {
         }
 
+        public static String getBadLogin() {
+            Faker faker = new Faker();
+            return faker.name().firstName();
+        }
+
+        public static String getBadPassword() {
+            Faker faker = new Faker();
+            return faker.internet().password();
+        }
+
+
         public static RegistrationData getNewUser(String status) {
             Faker faker = new Faker(new Locale("ru"));
-
             RegistrationData registration = new RegistrationData(faker.name().firstName(),
                     faker.internet().password(), status);
             given()
@@ -40,6 +51,8 @@ public class DataGenerator {
                     .statusCode(200);
             return registration;
         }
+
+
     }
 }
 
