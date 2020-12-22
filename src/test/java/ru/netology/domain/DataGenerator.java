@@ -39,7 +39,7 @@ public class DataGenerator {
 
 
         public static RegistrationData getNewUser(String status) {
-            Faker faker = new Faker(new Locale("ru"));
+            Faker faker = new Faker();
             RegistrationData registration = new RegistrationData(faker.name().firstName(),
                     faker.internet().password(), status);
             given()
