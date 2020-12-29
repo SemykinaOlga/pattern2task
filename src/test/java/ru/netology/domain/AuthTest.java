@@ -16,42 +16,42 @@ public class AuthTest {
     }
 
     @Test
-    void ShouldStatus200() {
+    void shouldSuccessfulLoginValidUser() {
         RegistrationData registration = DataGenerator.Registration.getNewUser("active");
         SelenideElement form = $(".form");
-        $("[data-test-id=login] input").setValue(registration.getLogin());
-        $("[data-test-id=password] input").setValue(registration.getPassword());
-        $(".button").click();
-        $$(".heading").find(exactText("Личный кабинет")).shouldBe(exist);
+        form.$("[data-test-id=login] input").setValue(registration.getLogin());
+        form.$("[data-test-id=password] input").setValue(registration.getPassword());
+        form.$(".button").click();
+        form.$$(".heading").find(exactText("Личный кабинет")).shouldBe(exist);
     }
 
     @Test
-    void ShouldStatus400() {
+    void shouldNotSuccessfulLoginBlockedUser() {
         RegistrationData registration = DataGenerator.Registration.getNewUser("blocked");
         SelenideElement form = $(".form");
-        $("[data-test-id=login] input").setValue(registration.getLogin());
-        $("[data-test-id=password] input").setValue(registration.getPassword());
-        $(".button").click();
-        $(".notification__content").shouldHave(exactText("Ошибка! Пользователь заблокирован"));
+        form.$("[data-test-id=login] input").setValue(registration.getLogin());
+        form.$("[data-test-id=password] input").setValue(registration.getPassword());
+        form.$(".button").click();
+        form.$(".notification__content").shouldHave(exactText("Ошибка! Пользователь заблокирован"));
     }
 
     @Test
-    void ShouldReturnInvalidPassword() {
+    void shouldReturnInvalidPassword() {
         RegistrationData registration = DataGenerator.Registration.getNewUser("active");
         SelenideElement form = $(".form");
-        $("[data-test-id=login] input").setValue(registration.getLogin());
-        $("[data-test-id=password] input").setValue(getBadPassword());
-        $(".button").click();
-        $(".notification__content").shouldHave(exactText("Ошибка! Неверно указан логин или пароль"));
+        form.$("[data-test-id=login] input").setValue(registration.getLogin());
+        form.$("[data-test-id=password] input").setValue(getBadPassword());
+        form.$(".button").click();
+        form.$(".notification__content").shouldHave(exactText("Ошибка! Неверно указан логин или пароль"));
     }
 
     @Test
-    void ShouldReturnInvalidLogin() {
+    void shouldReturnInvalidLogin() {
         RegistrationData registration = DataGenerator.Registration.getNewUser("active");
         SelenideElement form = $(".form");
-        $("[data-test-id=login] input").setValue(getBadLogin());
-        $("[data-test-id=password] input").setValue(registration.getPassword());
-        $(".button").click();
-        $(".notification__content").shouldHave(exactText("Ошибка! Неверно указан логин или пароль"));
+        form.$("[data-test-id=login] input").setValue(getBadLogin());
+        form.$("[data-test-id=password] input").setValue(registration.getPassword());
+        form.$(".button").click();
+        form.$(".notification__content").shouldHave(exactText("Ошибка! Неверно указан логин или пароль"));
     }
 }
